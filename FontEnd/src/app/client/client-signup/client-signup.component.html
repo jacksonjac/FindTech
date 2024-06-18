@@ -1,0 +1,73 @@
+
+
+
+<div class="w-4/5 mx-auto space-y-24 py-10">
+    <div class="flex h-screen items-start">
+        <div class="w-1/2">
+            <img src="https://i.pinimg.com/originals/d1/54/66/d154660a6ae3104de2b0a314667a5ab6.png" alt="Mobile GIF" class="w-full h-full">
+        </div>
+        <div class="w-1/2 flex flex-col justify-center items-center p-8">
+            <h1 class="text-center font-serif font-bold text-4xl mb-8"><mat-icon class="mr-2">account_box</mat-icon>User SignUp</h1>
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="w-full max-w-lg bg-white p-8 rounded-lg shadow-md">
+                <div class="mb-6">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>face</mat-icon><span class="ml-2">Name</span></label>
+                    <input type="text" id="name" formControlName="name" class="shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" placeholder="Enter your Name">
+                    <div *ngIf="signupForm.get('name')?.invalid && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)">
+                        <div *ngIf="signupForm.get('name')?.errors?.['required']" class="text-red-500 text-xs italic">Name is required.</div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>mail</mat-icon><span class="ml-2">Email</span></label>
+                    <input type="email" id="email" formControlName="email" class="shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" placeholder="Enter your Email">
+                    <div *ngIf="signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
+                        <div *ngIf="signupForm.get('email')?.errors?.['required']" class="text-red-500 text-xs italic">Email is required.</div>
+                        <div *ngIf="signupForm.get('email')?.errors?.['email']" class="text-red-500 text-xs italic">Invalid email address.</div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="phone" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>phone</mat-icon><span class="ml-2">Phone Number</span></label>
+                    <input type="text" id="phone" formControlName="phone" class="shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" placeholder="Enter your Number">
+                    <div *ngIf="signupForm.get('phone')?.invalid && (signupForm.get('phone')?.dirty || signupForm.get('phone')?.touched)">
+                        <div *ngIf="signupForm.get('phone')?.errors?.['required']" class="text-red-500 text-xs italic">Phone number is required.</div>
+                        <div *ngIf="signupForm.get('phone')?.errors?.['pattern']" class="text-red-500 text-xs italic">Invalid phone number.</div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="district" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>edit_location</mat-icon><span class="ml-2">Select City</span></label>
+                    <select id="district" formControlName="district" class="shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg">
+                        <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                        <option value="Kollam">Kollam</option>
+                        <option value="Kottayam">Kottayam</option>
+                        <option value="Ernakulam">Ernakulam</option>
+                        <option value="Kozhikode">Kozhikode</option>
+                    </select>
+                    <div *ngIf="signupForm.get('district')?.invalid && (signupForm.get('district')?.dirty || signupForm.get('district')?.touched)">
+                        <div *ngIf="signupForm.get('district')?.errors?.['required']" class="text-red-500 text-xs italic">City is required.</div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>vpn_key</mat-icon><span class="ml-2">Password</span></label>
+                    <input type="password" id="password" formControlName="password" class="shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" placeholder="Enter New Password">
+                    <div *ngIf="signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)">
+                        <div *ngIf="signupForm.get('password')?.errors?.['required']" class="text-red-500 text-xs italic">Password is required.</div>
+                        <div *ngIf="signupForm.get('password')?.errors?.['pattern']" class="text-red-500 text-xs italic">Password must contain at least one uppercase letter, one number, and no spaces.</div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="confirm-password" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>vpn_key</mat-icon><span class="ml-2">Confirm Password</span></label>
+                    <input type="password" id="confirm-password" formControlName="confirmPassword" class="shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" placeholder="Confirm your Password">
+                    <div *ngIf="signupForm.get('confirmPassword')?.invalid && (signupForm.get('confirmPassword')?.dirty || signupForm.get('confirmPassword')?.touched)">
+                        <div *ngIf="signupForm.get('confirmPassword')?.errors?.['required']" class="text-red-500 text-xs italic">Confirmation password is required.</div>
+                        <div *ngIf="signupForm.get('confirmPassword')?.errors?.['mismatch']" class="text-red-500 text-xs italic">Passwords must match.</div>
+                    </div>
+                </div>
+                <button type="submit" class="mt-8 w-1/3 bg-blue-500 text-white text-lg hover:bg-blue-700 hover:scale-105 transform transition duration-700 ease-in-out py-3 rounded-lg flex items-center justify-center" [disabled]="signupForm.invalid" disabled>
+                    <mat-icon class="mr-2">arrow_forward</mat-icon>Submit
+                </button>
+                
+               
+            </form>
+        </div>
+    </div>
+</div>
+
