@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserInterface } from 'src/app/Interface/Users/user-interface';
 import { ToastService } from 'src/app/Servies/toast-service.service';
 import { UserAuthService } from 'src/app/Servies/Users/user-auth.service';
+import { LoginResponse } from 'src/app/Interface/LoginUser'; // Import the new interface
 
 @Component({
   selector: 'app-client-login',
@@ -29,18 +31,26 @@ export class ClientLoginComponent {
         password: this.loginForm.value.password
       };
 
-      this.auth.loginUser(UserData as any)
-        .subscribe(response => {
-          if (response) {
-            console.log("Response from backend", response);
-            this.toastService.showSuccess('Login Successful', 'Welcome to the Technicians List!');
+      this.auth.loginUser(UserData as UserInterface)
+
+        .subscribe((response: any) => {  
+          
+            
+          if (response && response.status) {
+            console.log("Login successful:", response.token);
+            localStorage.setItem('token',response.token)
+        
+            
+         this.toastService.showSuccess('Login Successful', 'Welcome to the Technicians List!');
             this.router.navigate(['techlist']);
+
+
           } else {
-            console.log("Failed to login");
-            this.toastService.showError('Login Failed', 'Please check your credentials.');
+            console.log("Failed to login:", response.message);
+            this.toastService.showError('Login Failed', response.message || 'Please check your credentials.');
           }
         }, error => {
-          console.log(error);
+          console.log("Error during login:", error);
           this.toastService.showError('Error', 'An error occurred during login.');
         });
     }
