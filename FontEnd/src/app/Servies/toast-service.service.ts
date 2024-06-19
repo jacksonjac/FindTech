@@ -8,6 +8,7 @@ export class ToastService {
   constructor(private messageService: MessageService) {}
 
   showSuccess(summary: string, detail: string) {
+    console.log("messages showed showsucess")
     this.messageService.add({ severity: 'success', summary: summary, detail: detail });
   }
 
