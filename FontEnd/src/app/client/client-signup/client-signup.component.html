@@ -6,8 +6,11 @@
         <div class="w-1/2">
             <img src="https://i.pinimg.com/originals/d1/54/66/d154660a6ae3104de2b0a314667a5ab6.png" alt="Mobile GIF" class="w-full h-full">
         </div>
+
+
+
         <div class="w-1/2 flex flex-col justify-center items-center p-8">
-            <h1 class="text-center font-serif font-bold text-4xl mb-8"><mat-icon class="mr-2">account_box</mat-icon>User SignUp</h1>
+            <h1 class="text-center font-serif font-bold text-4xl mb-8">SignUp</h1>
             <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="w-full max-w-lg bg-white p-8 rounded-lg shadow-md">
                 <div class="mb-6">
                     <label for="name" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>face</mat-icon><span class="ml-2">Name</span></label>
@@ -16,6 +19,7 @@
                         <div *ngIf="signupForm.get('name')?.errors?.['required']" class="text-red-500 text-xs italic">Name is required.</div>
                     </div>
                 </div>
+                
                 <div class="mb-6">
                     <label for="email" class="block text-gray-700 text-sm font-bold mb-2 text-lg inline-flex items-center"><mat-icon>mail</mat-icon><span class="ml-2">Email</span></label>
                     <input type="email" id="email" formControlName="email" class="shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-lg" placeholder="Enter your Email">

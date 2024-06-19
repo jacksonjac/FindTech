@@ -42,6 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { ClientTechlistComponent } from './client/client-techlist/client-techlist.component';
 import { ClientOtpComponent } from './client/client-otp/client-otp.component';
+import { ModalComponent } from './client/modal/modal.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { ClientOtpComponent } from './client/client-otp/client-otp.component';
     TechnicianlistComponent,
     ClientTechlistComponent,
     ClientOtpComponent,
+    ModalComponent,
  
   ],
   imports: [

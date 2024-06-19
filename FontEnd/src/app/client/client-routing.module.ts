@@ -5,6 +5,7 @@ import { ClientHomeComponent } from './client-home/client-home.component';
 import { ClientLoginComponent } from './client-login/client-login.component';
 import { ClientSignupComponent } from './client-signup/client-signup.component';
 import { ClientTechlistComponent } from './client-techlist/client-techlist.component';
+import { ClientOtpComponent } from './client-otp/client-otp.component';
 
 
 
@@ -14,7 +15,9 @@ const routes: Routes = [{
     {path:"",component:ClientHomeComponent},
     {path:"login",component:ClientLoginComponent},
     {path:"signup",component:ClientSignupComponent},
-    {path:"techlist",component:ClientTechlistComponent}
+    {path:"techlist",component:ClientTechlistComponent},
+    {path:"otppage",component:ClientOtpComponent}
+
     
   ]
 }

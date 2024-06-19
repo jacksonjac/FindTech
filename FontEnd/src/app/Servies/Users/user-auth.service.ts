@@ -19,7 +19,6 @@ export class UserAuthService {
   }
 
   loginUser(UserData:any){
-    console.log("sfsdfsdff",UserData)
     return this.http.post(`${this.baseUrl}api/user/newLogin`,UserData)
   }
 

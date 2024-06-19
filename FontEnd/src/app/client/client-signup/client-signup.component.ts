@@ -60,8 +60,8 @@ export class ClientSignupComponent implements OnInit{
       this.auth.registerUser(UserData as UserInterface)
       .subscribe((response) => {
         if (response) {
-          this.showSuccess();
-          this.router.navigate(['login']);
+           console.log(response,"from back end")
+          this.router.navigate(['otppage']);
         } else {
           console.log("Failed to register");
         }
@@ -71,8 +71,6 @@ export class ClientSignupComponent implements OnInit{
   }
 }
 
-showSuccess() {
-  this.mService.add({ severity: 'success', summary: 'Success', detail: 'Registration successful!' });
-}
+
    
 }
