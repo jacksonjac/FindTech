@@ -9,26 +9,33 @@ import dotenv from 'dotenv';
 import serverConfig from './server';
 import dependencies from './Framework/Confiq/Dependencies';
 import { routes } from './Adaptors/Routers';
-
-
-dotenv.config();
-const appPass = process.env.APP_PASS;
-console.log('App Password:', appPass);
-
-
-
+import session from 'express-session';
 
 dotenv.config();
+
+
+
+
+
+
+
 
 connectDB(config)
-dotenv.config()
+
 const app = express();
 const server=http.createServer(app)
 app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
 
-console.log("app page")
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if using HTTPS
+}));
+
+app.use(express.json()); // for parsing application/json
 
 
 app.use('/api',routes(dependencies))

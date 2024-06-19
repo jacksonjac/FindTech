@@ -38,11 +38,12 @@ import { TechnicianSignupComponent } from './technician/technician-signup/techni
 import { TechnicianRoutingModule } from './technician/Technician-routing.module';
 import { UserlistComponent } from './admin/userlist/userlist.component';
 import { TechnicianlistComponent } from './admin/technicianlist/technicianlist.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { ClientTechlistComponent } from './client/client-techlist/client-techlist.component';
 import { ClientOtpComponent } from './client/client-otp/client-otp.component';
 import { ModalComponent } from './client/modal/modal.component';
+import { AuthInterceptor } from './client/interceptor/auth.interceptor';
 
 
 @NgModule({
@@ -91,7 +92,14 @@ import { ModalComponent } from './client/modal/modal.component';
     RippleModule
    
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

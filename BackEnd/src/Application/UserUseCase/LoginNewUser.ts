@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
 const secretKey = "your-256-bit-secret";
-console.log(process.env.SECRET_KEY);
+
 
 export const loginNewUser = (dependencies: any) => {
   const { loginNewUserRepo } = dependencies.repositery;
@@ -20,12 +20,9 @@ export const loginNewUser = (dependencies: any) => {
     // Debugging: Log the fetched user data
     console.log("Fetched user data:", responseFromLoginNewUser);
 
-    if (responseFromLoginNewUser.status) {
+    if (responseFromLoginNewUser.status === true) {
       const userData = responseFromLoginNewUser.Data;
       const hashedPassword = userData.password;
-
-      // Debugging: Ensure the hashed password is available
-      console.log("Hashed password:", hashedPassword);
 
       if (hashedPassword) {
         // Check if the provided password matches the hashed password
@@ -48,11 +45,13 @@ export const loginNewUser = (dependencies: any) => {
           return {
             message: "Login successful",
             data: userData,
-            token: token, // Include the JWT token in the response
+            token: token, 
+            status:true// Include the JWT token in the response
           };
         } else {
           // Passwords do not match
           return {
+            status: false,
             message: "Login failed: Invalid password",
             data: null,
           };
@@ -60,6 +59,7 @@ export const loginNewUser = (dependencies: any) => {
       } else {
         // No hashed password found
         return {
+          status: false,
           message: "Login failed: No hashed password found",
           data: null,
         };
@@ -67,8 +67,9 @@ export const loginNewUser = (dependencies: any) => {
     } else {
       // User not found
       return {
+        status: false,
         message: "Login failed: User not found",
-        data: responseFromLoginNewUser,
+        data: null
       };
     }
   };
