@@ -1,9 +1,12 @@
+declare var google:any
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { UserInterface } from 'src/app/Interface/Users/user-interface';
 import { UserAuthService } from 'src/app/Servies/Users/user-auth.service';
+import { ToastService } from 'src/app/Servies/Toster/toast-service.service';
 
 
 @Component({
@@ -14,12 +17,50 @@ import { UserAuthService } from 'src/app/Servies/Users/user-auth.service';
 })
 export class ClientSignupComponent implements OnInit{
 
+  constructor(private fb: FormBuilder ,
+    private auth:UserAuthService,
+    private toastService: ToastService,
+    private router:Router,
+    private primengConfig: PrimeNGConfig) {}
 
 
-
-  ngOnInit(): void {
-    this.primengConfig.ripple = true;
-  }
+    ngOnInit(): void {
+      google.accounts.id.initialize({
+        client_id: '1096596892716-ogub7mk17mvh4mus97tdcmkc87r82m2p.apps.googleusercontent.com',
+        callback: (response: any) => this.handleLogin(response)
+      });
+  
+      google.accounts.id.renderButton(document.getElementById("SignUp-btn"), {
+        theme: 'filled_black',
+        size: 'large',
+        text: 'signin_with',
+        shape: 'rectangular'
+      });
+    }
+  
+    private decodeToken(token: string): any {
+      try {
+        const payload = token.split('.')[1];
+        return JSON.parse(atob(payload));
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+  
+    handleLogin(response: any): void {
+      if (response) {
+        const payload = this.decodeToken(response.credential);
+  
+        if (payload) {
+          sessionStorage.setItem("loggedUser", JSON.stringify(payload));
+          this.toastService.showSuccess('Login Successful', 'Welcome to the Technicians List!');
+          this.router.navigate(['techlist']);
+        } else {
+          this.toastService.showError('Login Failed', 'Invalid login response.');
+        }
+      }
+    }
   signupForm = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
@@ -30,11 +71,7 @@ export class ClientSignupComponent implements OnInit{
   }, { validator: this.passwordMatchValidator });
   messageService: any;
 
-  constructor(private fb: FormBuilder ,
-    private auth:UserAuthService,
-    private mService:MessageService,
-    private router:Router,
-    private primengConfig: PrimeNGConfig) {}
+  
 
   passwordMatchValidator(form: any) {
     const password = form.get('password').value;

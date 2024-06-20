@@ -1,5 +1,4 @@
 import {User} from './schema/UserSchema'
+import {UserOtp} from './schema/UserOtpSchem'
 
-export {
-    User
-}
+export { User, UserOtp }

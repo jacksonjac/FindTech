@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { UserInterface } from 'src/app/Interface/Users/user-interface';
 import { LoginResponse } from 'src/app/Interface/LoginUser';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router:Router) { }
 
 
   baseUrl = "http://localhost:3000/"
@@ -24,6 +25,16 @@ export class UserAuthService {
     return this.http.post<LoginResponse>(`${this.baseUrl}api/user/newLogin`, userData);
   }
 
+  loggedIn(): boolean {
+    return !!localStorage.getItem('token') 
+  }
 
+
+
+  logoutUser(): void {
+    localStorage.removeItem('token');
+    
+    this.router.navigate(['']);
+  }
  
 }

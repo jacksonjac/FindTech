@@ -17,6 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const localToken = localStorage.getItem('token')
 
     request = request.clone({headers:request.headers.set('Autorazation','bearer'+localToken)})
+    console.log("interceptor page")
     return next.handle(request);
   }
 }
