@@ -44,6 +44,10 @@ import { ClientTechlistComponent } from './client/client-techlist/client-techlis
 import { ClientOtpComponent } from './client/client-otp/client-otp.component';
 import { ModalComponent } from './client/modal/modal.component';
 import { AuthInterceptor } from './client/interceptor/auth.interceptor';
+import { TechnicianOtpComponent } from './technician/technician-otp/technician-otp.component';
+import { TechHomepageComponent } from './technician/tech-homepage/tech-homepage.component';
+import { TechQuizhomeComponent } from './technician/tech-quizhome/tech-quizhome.component';
+import { TechQuizpageComponent } from './technician/tech-quizpage/tech-quizpage.component';
 
 
 @NgModule({
@@ -65,6 +69,10 @@ import { AuthInterceptor } from './client/interceptor/auth.interceptor';
     ClientTechlistComponent,
     ClientOtpComponent,
     ModalComponent,
+    TechnicianOtpComponent,
+    TechHomepageComponent,
+    TechQuizhomeComponent,
+    TechQuizpageComponent,
  
   ],
   imports: [

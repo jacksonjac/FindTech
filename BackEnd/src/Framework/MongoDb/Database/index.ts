@@ -1,4 +1,6 @@
 import {User} from './schema/UserSchema'
-import {UserOtp} from './schema/UserOtpSchem'
 
-export { User, UserOtp }
+import { Technican } from './schema/TechnicianSchema'
+import { Admin } from './schema/AdminSchema'
+
+export { User ,Technican,Admin}

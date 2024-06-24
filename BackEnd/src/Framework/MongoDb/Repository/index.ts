@@ -1,12 +1,27 @@
 
 import RegisterNewUserRepo from './UserRepositoy/RegisterNewUserRepo'
 import loginNewUserRepo from './UserRepositoy/loginNewUserRepo'
-import UserOtpRepo from './UserRepositoy/UserOtpRepo'
+import googlenewUserRepo from './UserRepositoy/googlenewUserRepo'
+import { RegisterNewTechRepo } from './TechnicianRepository'
+import LogTechRepo from './TechnicianRepository/LogTechRepo'
+import { logAdminRepo } from './AdminRepository'
+import {AdUserlistRepo} from './AdminRepository'
+import {blockUserRepo} from './AdminRepository'
+import {UnblockUserRepo} from  "./AdminRepository"
+
+
 
 export {
     RegisterNewUserRepo,
     loginNewUserRepo,
-    UserOtpRepo
+    googlenewUserRepo,
+    RegisterNewTechRepo,
+    LogTechRepo,
+    logAdminRepo,
+    AdUserlistRepo,
+    blockUserRepo,
+    UnblockUserRepo
+    
 
    
 }

@@ -6,6 +6,7 @@ import { ClientLoginComponent } from './client-login/client-login.component';
 import { ClientSignupComponent } from './client-signup/client-signup.component';
 import { ClientTechlistComponent } from './client-techlist/client-techlist.component';
 import { ClientOtpComponent } from './client-otp/client-otp.component';
+import { authguardGuard } from './guards/authguard.guard';
 
 
 
@@ -15,8 +16,9 @@ const routes: Routes = [{
     {path:"",component:ClientHomeComponent},
     {path:"login",component:ClientLoginComponent},
     {path:"signup",component:ClientSignupComponent},
-    {path:"techlist",component:ClientTechlistComponent},
-    {path:"otppage",component:ClientOtpComponent}
+    {path:"techlist",component:ClientTechlistComponent,canActivate:[authguardGuard]},
+    {path:"otppage",component:ClientOtpComponent},
+  
 
     
   ]

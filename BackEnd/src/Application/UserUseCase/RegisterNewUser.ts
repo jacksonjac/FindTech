@@ -8,6 +8,12 @@ export const RegisterNewUser = (dependencies: any) => {
   } = dependencies;
 
   const executeFunction = async (data: any) => {
+
+    try {
+      
+    } catch (error) {
+      
+    }
     const responceFromRegisterNewUser = await RegisterNewUserRepo.postExist(
       data
     );
@@ -31,6 +37,8 @@ export const RegisterNewUser = (dependencies: any) => {
       return {
         message: "OTP sent to email",
         Data: responceFromRegisterNewUser,
+        OTP:otp,
+        token:"jacksontoken"
       };
     }
 

@@ -5,8 +5,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { UserInterface } from 'src/app/Interface/Users/user-interface';
-import { UserAuthService } from 'src/app/Servies/Users/user-auth.service';
+
 import { ToastService } from 'src/app/Servies/Toster/toast-service.service';
+import { RegisterResponse } from 'src/app/Interface/Users/RegisterResponse';
+import { TechAuthService } from 'src/app/Servies/Technician/tech-auth.service';
+import { UserAuthService } from 'src/app/Servies/Users/user-auth.service';
 
 
 @Component({
@@ -51,13 +54,32 @@ export class ClientSignupComponent implements OnInit{
     handleLogin(response: any): void {
       if (response) {
         const payload = this.decodeToken(response.credential);
-  
         if (payload) {
-          sessionStorage.setItem("loggedUser", JSON.stringify(payload));
-          this.toastService.showSuccess('Login Successful', 'Welcome to the Technicians List!');
-          this.router.navigate(['techlist']);
+          const UserData: any = {
+            name: payload.name,
+            email: payload.email,
+            phone: "", // If phone is not provided by Google, set it empty
+            district: '', // If district is not provided by Google, set it empty
+            password: payload.sub // Using Google user ID as a password placeholder
+             };
+  
+          this.auth.GoogleregisterUser(UserData)
+            .subscribe((response: any) => {
+              console.log("google login response",response)
+              if (response && response.status) {
+  
+                localStorage.setItem("token",response.token)
+                this.toastService.showSuccess('Registration Successful', 'Welcome to the Technicians List!');
+                this.router.navigate(['techlist']);
+              } else {
+                this.toastService.showError('Registration Failed', response.message || 'Unable to register your account.');
+              }
+            }, error => {
+              console.log("Error during registration:", error);
+              this.toastService.showError('Error', 'An error occurred during registration.');
+            });
         } else {
-          this.toastService.showError('Login Failed', 'Invalid login response.');
+          this.toastService.showError('Registration Failed', 'Invalid registration response.');
         }
       }
     }
@@ -86,27 +108,37 @@ export class ClientSignupComponent implements OnInit{
 
   onSubmit() {
     if (this.signupForm.valid) {
-     const UserData = {
-      name:this.signupForm.value.name,
-      email:this.signupForm.value.email,
-      phone:this.signupForm.value.phone,
-      district:this.signupForm.value.district,
-      password:this.signupForm.value.password}
-
-   
-      this.auth.registerUser(UserData as UserInterface)
-      .subscribe((response) => {
-        if (response) {
-           console.log(response,"from back end")
-          this.router.navigate(['otppage']);
-        } else {
-          console.log("Failed to register");
+      const UserData = {
+        name: this.signupForm.value.name,
+        email: this.signupForm.value.email,
+        phone: this.signupForm.value.phone,
+        district: this.signupForm.value.district,
+        password: this.signupForm.value.password
+      };
+  
+      this.auth.registerUser(UserData as UserInterface).subscribe(
+        (response: RegisterResponse) => {
+          if (response) {
+            console.log(response.OTP, "from back end");
+            console.log(response.token,'token registe')
+  
+            // Store OTP in session storage
+            sessionStorage.setItem('otp', response.OTP);
+            localStorage.setItem("token",response.token)
+  
+            this.toastService.showSuccess('Data Added Successfully', '6 digit OTP sent to your Email');
+            this.router.navigate(['otppage']);
+          } else {
+            console.log("Failed to register");
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-      }, (error) => {
-        console.log(error);
-      });
+      );
+    }
   }
-}
+  
 
 
    

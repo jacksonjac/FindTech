@@ -4,6 +4,7 @@ import { UserInterface } from 'src/app/Interface/Users/user-interface';
 import { LoginResponse } from 'src/app/Interface/LoginUser';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { RegisterResponse } from 'src/app/Interface/Users/RegisterResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,16 @@ export class UserAuthService {
 
   baseUrl = "http://localhost:3000/"
 
-  registerUser(UserData:UserInterface){
-
-    return this.http.post(`${this.baseUrl}api/user/newUser`,UserData)
-    
+  registerUser(UserData: any): Observable<RegisterResponse> {
+    return this.http.post<any>(`${this.baseUrl}api/user/newUser`, UserData);
   }
-
   loginUser(userData: UserInterface): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}api/user/newLogin`, userData);
+  }
+  GoogleregisterUser(UserData: any): Observable<any> {
+
+       console.log("google request passing...")
+    return this.http.post<any>(`${this.baseUrl}api/user/GoogleRegister`, UserData);
   }
 
   loggedIn(): boolean {

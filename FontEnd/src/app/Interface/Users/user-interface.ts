@@ -3,8 +3,9 @@ export interface UserInterface {
     id:string,
     name:string,
     email:string,
-    phone:number,
+    phone:string,
     district:string,
-    password:string
+    password:string,
+    image:string
 
 }
